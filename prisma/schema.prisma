@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  role          Role     @default(USER)
+  created_at    DateTime @default(now())
+
+  @@map("users")
+}
+
+model Driver {
+  id             String    @id @default(cuid())
+  full_name      String
+  email          String    @unique
+  password_hash  String
+  cpf            String    @unique
+  contact_number String?
+  birthDate      DateTime?
+  licenseNumber  String?
+  licenseExpiry  DateTime?
+
+  company    Company @relation(fields: [company_id], references: [id])
+  company_id String
+
+  Vehicle Vehicle[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("drivers")
+}
+
+model Vehicle {
+  id           String @id @default(cuid())
+  make         String
+  model        String
+  year         String
+  licensePlate String @unique
+  vin          String @unique
+
+  driver    Driver @relation(fields: [driver_id], references: [id])
+  driver_id String
+
+  company    Company @relation(fields: [company_id], references: [id])
+  company_id String
+
+  Maintenance Maintenance[]
+
+  @@map("vehicles")
+}
+
+model Company {
+  id             String  @id @default(cuid())
+  name           String
+  cnpj           String  @unique
+  contact_number String?
+  contact_email  String?
+
+  Driver Driver[]
+
+  Vehicle Vehicle[]
+
+  @@map("companies")
+}
+
+model Maintenance {
+  id            String    @id @default(cuid())
+  scheduledDate DateTime
+  status        String // Exemplo: "Agendada", "Iniciada", "Concluída"
+  description   String?
+  startDate     DateTime?
+  endDate       DateTime?
+  cost          Float?
+
+  vehicle    Vehicle @relation(fields: [vehicle_id], references: [id])
+  vehicle_id String
+
+  updated_at DateTime  @updatedAt
+  Payment    Payment[]
+
+  @@map("maintenances")
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  amount        Float
+  paymentDate   DateTime @default(now())
+  paymentMethod String // Exemplo: "Transferência", "Cartão", "Dinheiro"
+  status        String // Exemplo: "Pendente", "Concluído"
+
+  maintenance    Maintenance @relation(fields: [maintenance_id], references: [id])
+  maintenance_id String
+
+  updated_at DateTime @updatedAt
+
+  @@map("payments")
+}
