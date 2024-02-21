@@ -28,7 +28,7 @@ export class CreateVehicleUseCase {
     driver_id,
   }: CreateVehicleRequest): Promise<CreateVehicleResponse> {
     const vehicleWithSomeLincensePlate =
-      await this.vehicleRepository.findByLincensePlate(licensePlate)
+      await this.vehicleRepository.findByLicensePlate(licensePlate)
 
     if (vehicleWithSomeLincensePlate) {
       throw new LicensePlateAlreadyExistError()

@@ -3,6 +3,7 @@ import { VehicleRespository } from '../vehicles-repository'
 
 export class InMemoryVehicleRepository implements VehicleRespository {
   public items: Vehicle[] = []
+
   async findByLicensePlate(licensePlate: string) {
     const vehicle = this.items.find(
       (item) => item.licensePlate === licensePlate,
@@ -15,18 +16,25 @@ export class InMemoryVehicleRepository implements VehicleRespository {
     return vehicle
   }
 
-  async update(id: string, data: Prisma.VehicleUpdateInput) {
-    // Encontra o índice do veículo no array 'items' com base no 'id'
-    const index = this.items.findIndex((vehicle) => vehicle.id === data.id)
+  async delete(id: string): Promise<{ message: string }> {
+    const index = this.items.findIndex((item) => item.id === id)
+
+    if (index >= 0) {
+      this.items.splice(index, 1)
+    }
+    return { message: 'Vehicle deleted successfully.' }
+  }
+
+  async update(vehicle: Vehicle) {
+    const index = this.items.findIndex((item) => item.id === vehicle.id)
 
     const isValidIndex = index >= 0
 
     if (isValidIndex) {
-      return (this.items[index] = data)
+      this.items[index] = vehicle
     }
 
-    // Retorna o veículo atualizado
-    return data
+    return vehicle
   }
 
   async findById(id: string) {

@@ -3,17 +3,38 @@ import { Prisma, Vehicle } from '@prisma/client'
 import { VehicleRespository } from '../vehicles-repository'
 
 export class PrismaVehiclesRepository implements VehicleRespository {
-  async findByEmail(email: string) {
-    const user = await prisma.user.findUnique({
+  async findById(id: string) {
+    const vehicle = await prisma.vehicle.findUnique({
       where: {
-        email,
+        id,
       },
     })
 
-    return user
+    return vehicle
   }
 
-  async findByLincensePlate(licensePlate: string): Promise<Vehicle | null> {
+  async delete(id: string): Promise<{ message: string }> {
+    await prisma.vehicle.delete({
+      where: {
+        id,
+      },
+    })
+
+    return { message: 'Veiculo deletado com sucesso' }
+  }
+
+  async findManyVehicles(page: number) {
+    const pageSize = 20
+    const skip = (page - 1) * pageSize
+
+    const vehicles = await prisma.vehicle.findMany({
+      skip,
+      take: pageSize,
+    })
+    return vehicles
+  }
+
+  async findByLicensePlate(licensePlate: string): Promise<Vehicle | null> {
     const vehicle = await prisma.vehicle.findUnique({
       where: {
         licensePlate,
@@ -21,6 +42,16 @@ export class PrismaVehiclesRepository implements VehicleRespository {
     })
 
     return vehicle
+  }
+
+  async update(vehicle: Vehicle) {
+    const updatedVehicle = await prisma.vehicle.update({
+      where: {
+        id: vehicle.id,
+      },
+      data: vehicle,
+    })
+    return updatedVehicle
   }
 
   async create(data: Prisma.VehicleUncheckedCreateInput) {
