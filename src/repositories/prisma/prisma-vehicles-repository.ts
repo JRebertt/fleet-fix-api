@@ -13,7 +13,7 @@ export class PrismaVehiclesRepository implements VehicleRespository {
     return vehicle
   }
 
-  async delete(id: string): Promise<{ message: string }> {
+  async delete(id: string) {
     await prisma.vehicle.delete({
       where: {
         id,
@@ -34,7 +34,7 @@ export class PrismaVehiclesRepository implements VehicleRespository {
     return vehicles
   }
 
-  async findByLicensePlate(licensePlate: string): Promise<Vehicle | null> {
+  async findByLicensePlate(licensePlate: string) {
     const vehicle = await prisma.vehicle.findUnique({
       where: {
         licensePlate,

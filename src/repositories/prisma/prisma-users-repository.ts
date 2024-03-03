@@ -3,6 +3,25 @@ import { Prisma } from '@prisma/client'
 import { UsersRepository } from '../users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
+  async findManyUsers(page: number) {
+    const pageSize = 20
+    const skip = (page - 1) * pageSize
+
+    const users = await prisma.user.findMany({
+      skip,
+      take: pageSize,
+    })
+    return users
+  }
+
+  async findById(id: string) {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    })
+
+    return user
+  }
+
   async findByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {

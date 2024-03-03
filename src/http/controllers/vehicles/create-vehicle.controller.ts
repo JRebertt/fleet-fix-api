@@ -2,7 +2,7 @@ import { makeRegisterVehicleUseCase } from '@/use-case/factories/make-register-v
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function registerVehicle(
+export async function createVehicle(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -12,12 +12,11 @@ export async function registerVehicle(
     year: z.string(),
     licensePlate: z.string(),
     vin: z.string(),
-    Maintenance: z.string(),
-    company: z.string(),
-    driver: z.string(),
+    company_id: z.string(),
+    driver_id: z.string(),
   })
 
-  const { make, model, year, licensePlate, vin, driver, Maintenance, company } =
+  const { make, model, year, licensePlate, vin, company_id, driver_id } =
     registerUserBodySchema.parse(request.body)
 
   try {
@@ -29,9 +28,8 @@ export async function registerVehicle(
       year,
       licensePlate,
       vin,
-      Maintenance,
-      company,
-      driver,
+      company_id,
+      driver_id,
     })
   } catch (err) {
     if (err instanceof Error) {
