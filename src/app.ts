@@ -9,11 +9,6 @@ import fastifyCors from '@fastify/cors'
 
 export const app = fastify()
 
-app.register(fastifyCors, {
-  origin: true,
-  credentials: true,
-})
-
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
   cookie: {
@@ -26,6 +21,11 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+
+app.register(fastifyCors, {
+  origin: true,
+  credentials: true,
+})
 
 app.register(userRoute)
 app.register(vehicleRoute)

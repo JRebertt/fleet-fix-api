@@ -1,4 +1,5 @@
-import { makeRegisterVehicleUseCase } from '@/use-case/factories/make-register-vehicle-use-case'
+import { LicensePlateAlreadyExistError } from '@/use-case/error/license-plate-already-exist-error'
+import { makeCreateVehicleUseCase } from '@/use-case/factories/make-create-vehicle-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -6,7 +7,7 @@ export async function createVehicle(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const registerUserBodySchema = z.object({
+  const createVehicleBodySchema = z.object({
     make: z.string(),
     model: z.string(),
     year: z.string(),
@@ -17,12 +18,12 @@ export async function createVehicle(
   })
 
   const { make, model, year, licensePlate, vin, company_id, driver_id } =
-    registerUserBodySchema.parse(request.body)
+    createVehicleBodySchema.parse(request.body)
 
   try {
-    const registerVehicleUseCase = makeRegisterVehicleUseCase()
+    const vehicleUseCase = makeCreateVehicleUseCase()
 
-    await registerVehicleUseCase.execute({
+    await vehicleUseCase.execute({
       make,
       model,
       year,
@@ -32,9 +33,10 @@ export async function createVehicle(
       driver_id,
     })
   } catch (err) {
-    if (err instanceof Error) {
-      return reply.status(409).send({ message: err.message })
+    if (err instanceof LicensePlateAlreadyExistError) {
+      return reply.status(400).send({ message: err.message })
     }
+
     return reply.status(500).send()
   }
 
