@@ -3,7 +3,7 @@ import { Vehicle } from '@prisma/client'
 import { ResourceNotFoundError } from './error/resource-not-found-error'
 
 interface GetVehicleUseCaseRequest {
-  vehicleId: string
+  id: string
 }
 
 interface GetVehicleUseCaseResponse {
@@ -14,9 +14,9 @@ export class GetVehicleUseCase {
   constructor(private repository: VehicleRespository) {}
 
   async execute({
-    vehicleId,
+    id,
   }: GetVehicleUseCaseRequest): Promise<GetVehicleUseCaseResponse> {
-    const vehicle = await this.repository.findById(vehicleId)
+    const vehicle = await this.repository.findById(id)
 
     if (!vehicle) {
       throw new ResourceNotFoundError()

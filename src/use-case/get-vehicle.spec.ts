@@ -24,7 +24,7 @@ describe('Get Driver Use Case', () => {
     })
 
     const { vehicle } = await sut.execute({
-      vehicleId: createdVehicle.id,
+      id: createdVehicle.id,
     })
 
     expect(vehicle.make).toEqual('Ford')
@@ -33,7 +33,7 @@ describe('Get Driver Use Case', () => {
   it('should not be able to get user profile with wrong id', async () => {
     await expect(() =>
       sut.execute({
-        vehicleId: 'non-existing-id',
+        id: 'non-existing-id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

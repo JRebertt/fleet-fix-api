@@ -22,7 +22,7 @@ export class InMemoryVehicleRepository implements VehicleRespository {
     if (index >= 0) {
       this.items.splice(index, 1)
     }
-    return { message: 'Vehicle deleted successfully.' }
+    return { message: 'Veiculo deletado com sucesso.' }
   }
 
   async update(vehicle: Vehicle) {

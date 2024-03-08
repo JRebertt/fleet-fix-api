@@ -1,8 +1,30 @@
 import { Company, Prisma } from '@prisma/client'
-import { CompanyRespository } from '../company-repository '
+import { CompanyRespository } from '../company-repository'
 
 export class InMemoryCompanyRepository implements CompanyRespository {
   public items: Company[] = []
+
+  async delete(id: string): Promise<{ message: string }> {
+    const index = this.items.findIndex((item) => item.id === id)
+
+    if (index >= 0) {
+      this.items.splice(index, 1)
+    }
+    return { message: 'Empresa deletada com sucesso.' }
+  }
+
+  async update(company: Company) {
+    const index = this.items.findIndex((item) => item.id === company.id)
+
+    const isValidIndex = index >= 0
+
+    if (isValidIndex) {
+      this.items[index] = company
+    }
+
+    return company
+  }
+
   async findByCnpj(cnpj: string) {
     const company = this.items.find((item) => item.cnpj === cnpj)
 

@@ -6,6 +6,7 @@ import fastifyJwt from '@fastify/jwt'
 import { vehicleRoute } from './http/controllers/vehicles/route'
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
+import { companyRoute } from './http/controllers/companies/route'
 
 export const app = fastify()
 
@@ -29,6 +30,7 @@ app.register(fastifyCors, {
 
 app.register(userRoute)
 app.register(vehicleRoute)
+app.register(companyRoute)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

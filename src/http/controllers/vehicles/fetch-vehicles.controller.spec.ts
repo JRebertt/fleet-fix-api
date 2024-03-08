@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 import { prisma } from '@/lib/prisma'
 
-describe('Get Vehicle Information (e2e)', () => {
+describe('Fetch Vehicles (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -13,10 +13,9 @@ describe('Get Vehicle Information (e2e)', () => {
     await app.close()
   })
 
-  it('should get information of a specific vehicle', async () => {
+  it('should fetch vehicles, expecting more than one vehicle', async () => {
     const { token } = await createAndAuthenticateUser(app, 'ADMIN')
 
-    // Criação de dados de teste é necessária apenas se seu banco de dados é limpo antes de cada teste
     const company = await prisma.company.create({
       data: {
         name: 'DistCardoso',
@@ -40,7 +39,19 @@ describe('Get Vehicle Information (e2e)', () => {
       },
     })
 
-    const vehicle = await prisma.vehicle.create({
+    await prisma.vehicle.create({
+      data: {
+        make: 'Ford',
+        model: 'Fiesta',
+        year: '2020',
+        licensePlate: 'XYZ123',
+        vin: '1234567890ABCDEFG',
+        company_id: company.id,
+        driver_id: driver.id,
+      },
+    })
+
+    await prisma.vehicle.create({
       data: {
         make: 'Porsche',
         model: 'A4',
@@ -52,25 +63,12 @@ describe('Get Vehicle Information (e2e)', () => {
       },
     })
 
-    // Alteração na rota para se adequar ao propósito do teste
     const response = await request(app.server)
-      .get(`/vehicle/${vehicle.id}`) // Certifique-se de que este é o caminho correto para o seu endpoint
+      .get('/vehicles?page=1') // Altere o caminho conforme necessário para corresponder ao seu endpoint
       .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toEqual(200)
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        vehicle: {
-          id: vehicle.id,
-          make: 'Porsche',
-          model: 'A4',
-          year: '2022',
-          licensePlate: 'AD65YEY',
-          vin: '9TA4NKJ2SXSC58742',
-          driver_id: driver.id.toString(), // Garantir correspondência de tipo, se necessário
-          company_id: company.id.toString(), // Garantir correspondência de tipo, se necessário
-        },
-      }),
-    )
+    expect(Array.isArray(response.body.vehicles)).toBe(true)
+    expect(response.body.vehicles.length).toBeGreaterThan(1)
   })
 })

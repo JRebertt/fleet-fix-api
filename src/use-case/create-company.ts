@@ -1,6 +1,6 @@
 import { Company } from '@prisma/client'
 import { CompanyAlreadyExistsError } from './error/driver-already-exist-error'
-import { CompanyRespository } from '@/repositories/company-repository '
+import { CompanyRespository } from '@/repositories/company-repository'
 
 interface CreateCompanyRequest {
   name: string

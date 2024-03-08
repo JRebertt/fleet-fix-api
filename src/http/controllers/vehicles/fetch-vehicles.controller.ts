@@ -1,4 +1,4 @@
-import { makeFetchVehiclesUseCase } from '@/use-case/factories/make-fetch-vehicles-use-case'
+import { makeFetchVehiclesUseCase } from '@/use-case/factories/vehicle/make-fetch-vehicles-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 

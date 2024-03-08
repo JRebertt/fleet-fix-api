@@ -1,4 +1,4 @@
-import { CompanyRespository } from '@/repositories/company-repository '
+import { CompanyRespository } from '@/repositories/company-repository'
 import { Company } from '@prisma/client'
 
 interface FetchCompaniesUseCaseRequest {

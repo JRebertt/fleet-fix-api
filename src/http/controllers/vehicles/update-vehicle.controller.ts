@@ -3,14 +3,14 @@ import { z } from 'zod'
 
 import { LicensePlateAlreadyExistError } from '@/use-case/error/license-plate-already-exist-error'
 import { VehicleNotFoundError } from '@/use-case/error/vehicle-not-found-error'
-import { makeUpdateVehicleUseCase } from '@/use-case/factories/make-update-vehicle-use-case'
+import { makeUpdateVehicleUseCase } from '@/use-case/factories/vehicle/make-update-vehicle-use-case'
 
 export async function updateVehicle(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   const updateVehicleParamsSchema = z.object({
-    vehicleId: z.string().cuid(),
+    id: z.string().cuid(),
   })
 
   const updateVehicleBodySchema = z.object({
@@ -25,13 +25,13 @@ export async function updateVehicle(
 
   const { make, model, licensePlate, vin, year, company_id, driver_id } =
     updateVehicleBodySchema.parse(request.body)
-  const { vehicleId } = updateVehicleParamsSchema.parse(request.params)
+  const { id } = updateVehicleParamsSchema.parse(request.params)
 
   try {
     const updateVehicleUseCase = makeUpdateVehicleUseCase()
 
     const updatedVehicle = await updateVehicleUseCase.execute({
-      id: vehicleId,
+      id,
       make,
       model,
       licensePlate,
