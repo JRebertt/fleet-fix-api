@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { LicensePlateAlreadyExistError } from '@/use-case/error/license-plate-already-exist-error'
-import { VehicleNotFoundError } from '@/use-case/error/vehicle-not-found-error'
 import { makeUpdateVehicleUseCase } from '@/use-case/factories/vehicle/make-update-vehicle-use-case'
+import { LicensePlateAlreadyExistError } from '@/use-case/error/already-exist-error'
+import { VehicleNotFoundError } from '@/use-case/error/resource-not-found-error'
 
 export async function updateVehicle(
   request: FastifyRequest,

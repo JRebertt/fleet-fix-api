@@ -23,20 +23,22 @@ model User {
   password_hash String
   role          Role     @default(MEMBER)
   created_at    DateTime @default(now())
+  Driver        Driver?
 
   @@map("users")
 }
 
 model Driver {
-  id             String    @id @default(cuid())
-  full_name      String
-  email          String    @unique
-  password_hash  String
+  id String @id @default(cuid())
+
   cpf            String    @unique
   contact_number String?
   birthDate      DateTime?
   licenseNumber  String?
   licenseExpiry  DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @unique
 
   company    Company @relation(fields: [company_id], references: [id])
   company_id String

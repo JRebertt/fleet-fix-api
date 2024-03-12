@@ -1,12 +1,9 @@
 import { DriverRespository } from '@/repositories/driver-repository'
 import { Driver } from '@prisma/client'
-import { hash } from 'bcryptjs'
-import { DriverAlreadyExistsError } from './error/driver-already-exist-error'
+import { DriverAlreadyExistsError } from './error/already-exist-error'
 
 interface CreateDriverRequest {
-  full_name: string
-  email: string
-  password: string
+  user_id: string
   cpf: string
   contact_number: string
   birthDate: Date
@@ -23,9 +20,7 @@ export class CreateDriverUseCase {
   constructor(private driverRepository: DriverRespository) {}
 
   async execute({
-    full_name,
-    email,
-    password,
+    user_id,
     cpf,
     birthDate,
     contact_number,
@@ -33,18 +28,16 @@ export class CreateDriverUseCase {
     licenseNumber,
     company_id,
   }: CreateDriverRequest): Promise<CreateDriverResponse> {
-    const password_hash = await hash(password, 6)
+    const driverWithSomeUserId =
+      await this.driverRepository.findByUserId(user_id)
     const driverWithSomeCpf = await this.driverRepository.findByCpf(cpf)
-    const driverWithSomeEmail = await this.driverRepository.findByEmail(email)
 
-    if (driverWithSomeCpf || driverWithSomeEmail) {
+    if (driverWithSomeCpf || driverWithSomeUserId) {
       throw new DriverAlreadyExistsError()
     }
 
     const driver = await this.driverRepository.create({
-      full_name,
-      email,
-      password_hash,
+      user_id,
       cpf,
       birthDate,
       contact_number,

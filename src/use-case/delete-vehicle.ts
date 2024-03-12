@@ -1,5 +1,6 @@
 import { VehicleRespository } from '@/repositories/vehicles-repository'
-import { VehicleNotFoundError } from './error/vehicle-not-found-error'
+import { VehicleNotFoundError } from './error/resource-not-found-error'
+
 interface DeleteVehicleRequest {
   id: string
 }

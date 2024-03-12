@@ -14,7 +14,7 @@ describe('Vehicle Delete (e2e)', () => {
   })
 
   it('should delete the vehicle successfully', async () => {
-    const { token } = await createAndAuthenticateUser(app, 'ADMIN')
+    const { token, user_id } = await createAndAuthenticateUser(app, 'ADMIN')
 
     const company = await prisma.company.create({
       data: {
@@ -27,9 +27,7 @@ describe('Vehicle Delete (e2e)', () => {
 
     const driver = await prisma.driver.create({
       data: {
-        full_name: 'John Doe',
-        email: 'johndoe@example.com',
-        password_hash: '123456',
+        user_id,
         birthDate: new Date(),
         cpf: '00000000000',
         contact_number: '99999999999',
@@ -56,18 +54,5 @@ describe('Vehicle Delete (e2e)', () => {
       .set('Authorization', `Bearer ${token}`)
 
     expect(deleteResponse.statusCode).toEqual(204)
-
-    // Tentar buscar o veículo após a exclusão para confirmar que ele foi removido
-    // try {
-    //   await prisma.vehicle.findUniqueOrThrow({
-    //     where: {
-    //       id: vehicle.id,
-    //     },
-    //   })
-    //   // Se a busca não lançar um erro, o teste falha
-    //   throw new Error('Vehicle was not deleted')
-    // } catch (error) {
-    //   expect(error.message).toContain('Vehicle not found') // Ou uma mensagem de erro específica esperada do seu ORM
-    // }
   })
 })

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryCompanyRepository } from '@/repositories/in-memory/in-memory-company-repository'
 import { CreateCompanyUseCase } from './create-company'
-import { CompanyAlreadyExistsError } from './error/driver-already-exist-error'
+import { CompanyAlreadyExistsError } from './error/already-exist-error'
 
 let companyRepository: InMemoryCompanyRepository
 let sut: CreateCompanyUseCase

@@ -13,8 +13,8 @@ export class InMemoryDriverRepository implements DriverRespository {
     return driver
   }
 
-  async findByEmail(email: string) {
-    const driver = this.items.find((item) => item.email === email)
+  async findByUserId(id: string) {
+    const driver = this.items.find((item) => item.user_id === id)
 
     if (!driver) {
       return null
@@ -42,21 +42,39 @@ export class InMemoryDriverRepository implements DriverRespository {
   async create(data: Prisma.DriverUncheckedCreateInput) {
     const driver = {
       id: 'driver-1',
-      full_name: data.full_name,
-      email: data.email,
-      password_hash: data.password_hash,
       cpf: data.cpf,
       birthDate: data.birthDate ? new Date(data.birthDate) : null,
       contact_number: data.contact_number ?? null,
       licenseExpiry: data.licenseExpiry ? new Date(data.licenseExpiry) : null,
       licenseNumber: data.licenseNumber ?? null,
-
+      user_id: data.user_id,
       company_id: data.company_id,
       created_at: new Date() ?? '',
       updated_at: new Date() ?? '',
     }
 
     this.items.push(driver)
+
+    return driver
+  }
+
+  async delete(id: string): Promise<{ message: string }> {
+    const index = this.items.findIndex((item) => item.id === id)
+
+    if (index >= 0) {
+      this.items.splice(index, 1)
+    }
+    return { message: 'Motorista deletado com sucesso.' }
+  }
+
+  async update(driver: Driver) {
+    const index = this.items.findIndex((item) => item.id === driver.id)
+
+    const isValidIndex = index >= 0
+
+    if (isValidIndex) {
+      this.items[index] = driver
+    }
 
     return driver
   }

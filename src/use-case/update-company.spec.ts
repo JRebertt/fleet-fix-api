@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { UpdateCompanyUseCase } from './update-company'
 import { InMemoryCompanyRepository } from '@/repositories/in-memory/in-memory-company-repository'
-import { CompanyNotFoundError } from './error/company-not-found-error'
-import { CompanyAlreadyExistsError } from './error/driver-already-exist-error'
+
+import { CompanyAlreadyExistsError } from './error/already-exist-error'
+import { CompanyNotFoundError } from './error/resource-not-found-error'
 
 let companyRepository: InMemoryCompanyRepository
 let sut: UpdateCompanyUseCase

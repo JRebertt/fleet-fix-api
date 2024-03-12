@@ -1,4 +1,4 @@
-import { VehicleNotFoundError } from '@/use-case/error/vehicle-not-found-error'
+import { VehicleNotFoundError } from '@/use-case/error/resource-not-found-error'
 import { makeDeleteVehicleUseCase } from '@/use-case/factories/vehicle/make-delete-vehicle-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

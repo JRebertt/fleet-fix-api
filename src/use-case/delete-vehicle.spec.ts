@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { DeleteVehicleUseCase } from './delete-vehicle'
 import { InMemoryVehicleRepository } from '@/repositories/in-memory/in-memory-vehicle-repository'
-import { VehicleNotFoundError } from './error/vehicle-not-found-error'
+import { VehicleNotFoundError } from './error/resource-not-found-error'
 
 let vehicleRepository: InMemoryVehicleRepository
 let sut: DeleteVehicleUseCase

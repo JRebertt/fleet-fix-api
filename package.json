@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
     "start": "node build/server.ts",
-    "build": "tsup src --out-dir",
+    "build": "tsup src --out-dir build",
     "eslint:fix": "eslint --ext .js,.ts src --fix",
     "test": "vitest run --dir src/use-case",
     "test:watch": "vitest --dir src/use-case",

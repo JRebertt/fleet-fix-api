@@ -1,5 +1,4 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import { hash } from 'bcryptjs'
 import { InMemoryDriverRepository } from '@/repositories/in-memory/in-memory-driver-repository'
 import { FetchDriversUseCase } from './fetch-drivers'
 
@@ -13,12 +12,9 @@ describe('Fetch User Check-in History Use Case', () => {
   })
 
   it('should be able to fetch list vehicles', async () => {
-    const password_hash = await hash('123456', 6)
-
     await repository.create({
-      full_name: 'Jonh Doe',
-      email: 'jonhdoe@exemple.com',
-      password_hash,
+      user_id: 'user_id-1',
+
       birthDate: new Date(),
       cpf: '00000000000',
       contact_number: '99999999999',
@@ -28,9 +24,7 @@ describe('Fetch User Check-in History Use Case', () => {
     })
 
     await repository.create({
-      full_name: 'Keli Doe',
-      email: 'kelidoe@example.com',
-      password_hash,
+      user_id: 'user_id-2',
       birthDate: new Date(),
       cpf: '00000000000',
       contact_number: '99999999999',
@@ -47,13 +41,9 @@ describe('Fetch User Check-in History Use Case', () => {
   })
 
   it('should be able to fetch paginated drivers list', async () => {
-    const password_hash = await hash('123456', 6)
-
     for (let i = 1; i <= 22; i++) {
       await repository.create({
-        full_name: `John Doe${i}`,
-        email: `johndoe${i}@example.com`,
-        password_hash,
+        user_id: `userId-${i}`,
         birthDate: new Date(),
         cpf: `00000000000${i}`,
         contact_number: '99999999999',
@@ -70,12 +60,12 @@ describe('Fetch User Check-in History Use Case', () => {
     expect(drivers).toHaveLength(2)
     expect(drivers).toEqual([
       expect.objectContaining({
-        full_name: `John Doe21`,
-        email: 'johndoe21@example.com',
+        user_id: `userId-21`,
+        cpf: '0000000000021',
       }),
       expect.objectContaining({
-        full_name: `John Doe22`,
-        email: 'johndoe22@example.com',
+        user_id: `userId-22`,
+        cpf: '0000000000022',
       }),
     ])
   })

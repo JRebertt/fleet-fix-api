@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { UpdateVehicleUseCase } from './update-vehicle'
 import { InMemoryVehicleRepository } from '@/repositories/in-memory/in-memory-vehicle-repository'
-import { LicensePlateAlreadyExistError } from './error/license-plate-already-exist-error'
-import { VehicleNotFoundError } from './error/vehicle-not-found-error'
+import { LicensePlateAlreadyExistError } from './error/already-exist-error'
+import { VehicleNotFoundError } from './error/resource-not-found-error'
 
 let vehicleRepository: InMemoryVehicleRepository
 let sut: UpdateVehicleUseCase

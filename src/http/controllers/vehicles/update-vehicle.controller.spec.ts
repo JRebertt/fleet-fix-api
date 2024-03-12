@@ -14,6 +14,8 @@ describe('Vehicle Update (e2e)', () => {
   })
 
   it('should update the vehicle successfully', async () => {
+    const { token, user_id } = await createAndAuthenticateUser(app, 'ADMIN')
+
     const company = await prisma.company.create({
       data: {
         name: 'DistCardoso',
@@ -25,9 +27,7 @@ describe('Vehicle Update (e2e)', () => {
 
     const driver = await prisma.driver.create({
       data: {
-        full_name: 'John Doe',
-        email: 'johndoe@example.com',
-        password_hash: '123456',
+        user_id,
         birthDate: new Date(),
         cpf: '00000000000',
         contact_number: '99999999999',
@@ -37,7 +37,6 @@ describe('Vehicle Update (e2e)', () => {
       },
     })
 
-    const { token } = await createAndAuthenticateUser(app, 'ADMIN')
     let vehicle = await prisma.vehicle.create({
       data: {
         make: 'Test',

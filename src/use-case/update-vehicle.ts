@@ -1,7 +1,8 @@
 import { Vehicle } from '@prisma/client'
-import { LicensePlateAlreadyExistError } from './error/license-plate-already-exist-error'
+
 import { VehicleRespository } from '@/repositories/vehicles-repository'
-import { VehicleNotFoundError } from './error/vehicle-not-found-error'
+import { VehicleNotFoundError } from './error/resource-not-found-error'
+import { LicensePlateAlreadyExistError } from './error/already-exist-error'
 
 interface UpdateVehicleRequest {
   id: string

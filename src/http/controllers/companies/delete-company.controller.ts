@@ -1,4 +1,4 @@
-import { CompanyNotFoundError } from '@/use-case/error/company-not-found-error'
+import { CompanyNotFoundError } from '@/use-case/error/resource-not-found-error'
 import { makeDeleteCompanyUseCase } from '@/use-case/factories/company/make-delete-company-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

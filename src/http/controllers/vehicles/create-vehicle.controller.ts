@@ -1,4 +1,4 @@
-import { LicensePlateAlreadyExistError } from '@/use-case/error/license-plate-already-exist-error'
+import { LicensePlateAlreadyExistError } from '@/use-case/error/already-exist-error'
 import { makeCreateVehicleUseCase } from '@/use-case/factories/vehicle/make-create-vehicle-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

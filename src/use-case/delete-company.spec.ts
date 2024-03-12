@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { DeleteCompanyUseCase } from './delete-company'
 import { InMemoryCompanyRepository } from '@/repositories/in-memory/in-memory-company-repository'
-import { CompanyNotFoundError } from './error/company-not-found-error'
+import { CompanyNotFoundError } from './error/resource-not-found-error'
 
 let companyRepository: InMemoryCompanyRepository
 let sut: DeleteCompanyUseCase

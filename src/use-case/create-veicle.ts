@@ -1,6 +1,6 @@
 import { VehicleRespository } from '@/repositories/vehicles-repository'
 import { Vehicle } from '@prisma/client'
-import { LicensePlateAlreadyExistError } from './error/license-plate-already-exist-error'
+import { LicensePlateAlreadyExistError } from './error/already-exist-error'
 
 interface CreateVehicleRequest {
   make: string

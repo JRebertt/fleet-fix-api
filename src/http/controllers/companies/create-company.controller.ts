@@ -1,4 +1,4 @@
-import { CompanyAlreadyExistsError } from '@/use-case/error/driver-already-exist-error'
+import { CompanyAlreadyExistsError } from '@/use-case/error/already-exist-error'
 import { makeCreateCompanyUseCase } from '@/use-case/factories/company/make-create-company-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

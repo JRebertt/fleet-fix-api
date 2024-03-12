@@ -3,7 +3,7 @@ import { UpdateCompanyUseCase } from '@/use-case/update-company'
 
 export function makeUpdateCompanyUseCase() {
   const repository = new PrismaCompaniesRepository()
-  const updateCompnayUseCase = new UpdateCompanyUseCase(repository)
+  const updateCompanyUseCase = new UpdateCompanyUseCase(repository)
 
-  return updateCompnayUseCase
+  return updateCompanyUseCase
 }

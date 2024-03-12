@@ -1,7 +1,7 @@
 import { Company } from '@prisma/client'
 import { CompanyRespository } from '@/repositories/company-repository'
-import { CompanyAlreadyExistsError } from './error/driver-already-exist-error'
-import { CompanyNotFoundError } from './error/company-not-found-error'
+import { CompanyAlreadyExistsError } from './error/already-exist-error'
+import { CompanyNotFoundError } from './error/resource-not-found-error'
 
 interface UpdateCompanyRequest {
   id: string

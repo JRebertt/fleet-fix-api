@@ -1,5 +1,5 @@
-import { CompanyNotFoundError } from './error/company-not-found-error'
 import { CompanyRespository } from '@/repositories/company-repository'
+import { CompanyNotFoundError } from './error/resource-not-found-error'
 interface DeleteCompanyRequest {
   id: string
 }

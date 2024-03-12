@@ -14,7 +14,7 @@ describe('Get Vehicle Information (e2e)', () => {
   })
 
   it('should get information of a specific vehicle', async () => {
-    const { token } = await createAndAuthenticateUser(app, 'ADMIN')
+    const { token, user_id } = await createAndAuthenticateUser(app, 'ADMIN')
 
     // Criação de dados de teste é necessária apenas se seu banco de dados é limpo antes de cada teste
     const company = await prisma.company.create({
@@ -28,9 +28,7 @@ describe('Get Vehicle Information (e2e)', () => {
 
     const driver = await prisma.driver.create({
       data: {
-        full_name: 'John Doe',
-        email: 'johndoe@example.com',
-        password_hash: '123456',
+        user_id,
         birthDate: new Date(),
         cpf: '00000000000',
         contact_number: '99999999999',

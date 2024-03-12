@@ -1,9 +1,8 @@
+import { LicensePlateAlreadyExistError } from '@/use-case/error/already-exist-error'
+import { CompanyNotFoundError } from '@/use-case/error/resource-not-found-error'
+import { makeUpdateCompanyUseCase } from '@/use-case/factories/company/make-update-company-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-
-import { LicensePlateAlreadyExistError } from '@/use-case/error/license-plate-already-exist-error'
-import { makeUpdateCompanyUseCase } from '@/use-case/factories/company/make-update-company-use-case'
-import { CompanyNotFoundError } from '@/use-case/error/company-not-found-error'
 
 export async function updateCompany(
   request: FastifyRequest,
